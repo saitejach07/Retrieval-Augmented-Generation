@@ -4,7 +4,7 @@ from app.config import Settings
 from app.rag.keyword_store import bm25_search
 from app.rag.vector_store import get_vector_store
 from app.schemas import SourceChunk
-from app.rag.rerank import semantic_rerank
+# from app.rag.rerank import semantic_rerank
 
 
 RRF_K = 60
@@ -105,17 +105,20 @@ def retrieve_final_chunks(
     4. Rerank hybrid candidates.
     5. Return final top K chunks.
     """
+    return hybrid_search(query, settings)
 
-    candidates = hybrid_search(
-        query=query,
-        settings=settings,
-    )
 
-    return semantic_rerank(
-        query=query,
-        chunks=candidates,
-        settings=settings,
-    )
+
+    # If we want to add reranker we can use this 
+    # candidates = hybrid_search(
+    #     query=query,
+    #     settings=settings,
+    # )
+    # return semantic_rerank(
+    #     query=query,
+    #     chunks=candidates,
+    #     settings=settings,
+    # )
 
 
 def rrf_fusion(
